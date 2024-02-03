@@ -29,7 +29,6 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(255))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
-    # Определения связей внутри класса User
     posts = db.relationship('Post', back_populates='author', cascade="all, delete-orphan")
     comments = db.relationship('Comment', back_populates='author', cascade="all, delete-orphan")
 

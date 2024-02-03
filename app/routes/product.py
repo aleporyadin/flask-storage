@@ -1,8 +1,7 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
-from flask_login import login_user, logout_user, current_user, login_required
+from flask import Blueprint, render_template, request, jsonify
+from flask_login import login_required
 from app import db
-from app.models import User, Role, Product
-from app.forms import LoginForm, RegistrationForm
+from app.models import Product
 
 product = Blueprint('product', __name__)
 
@@ -11,8 +10,8 @@ product = Blueprint('product', __name__)
 @login_required
 def products():
     page = request.args.get('page', 1, type=int)
-    products = Product.query.paginate(page=page, per_page=10, error_out=False)
-    return render_template('products.html', products=products.items, pagination=products)
+    all_products = Product.query.paginate(page=page, per_page=10, error_out=False)
+    return render_template('products.html', products=all_products.items, pagination=all_products)
 
 
 @product.route('/add-product', methods=['POST'])
@@ -31,9 +30,9 @@ def add_product():
 
 @product.route('/delete-product/<int:product_id>', methods=['DELETE'])
 def delete_product(product_id):
-    product = Product.query.get(product_id)
-    if product:
-        db.session.delete(product)
+    found_product = Product.query.get(product_id)
+    if found_product:
+        db.session.delete(found_product)
         db.session.commit()
         return jsonify({'success': True, 'message': 'Product has been deleted.'}), 200
     else:
@@ -42,12 +41,12 @@ def delete_product(product_id):
 
 @product.route('/update-product/<int:product_id>', methods=['POST'])
 def update_product(product_id):
-    product = Product.query.get(product_id)
-    if product:
-        product.name = request.form['name']
-        product.price = request.form['price']
-        product.quantity = request.form['quantity']
-        product.manufacturer = request.form['manufacturer']
+    found_product = Product.query.get(product_id)
+    if found_product:
+        found_product.name = request.form['name']
+        found_product.price = request.form['price']
+        found_product.quantity = request.form['quantity']
+        found_product.manufacturer = request.form['manufacturer']
 
         db.session.commit()
         return jsonify({'success': True, 'message': 'Product has been updated.'}), 200

@@ -16,11 +16,9 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None:
             form.username.errors.append('Invalid username or password')
-            # Вместо flash и redirect используйте render_template
             return render_template('login.html', form=form)
         elif not user.check_password(form.password.data):
             form.password.errors.append('Invalid password')
-            # Аналогично, отображаем шаблон с формой и ошибками
             return render_template('login.html', form=form)
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('main.index'))

@@ -3,38 +3,40 @@
 {% block title %}Blog{% endblock %}
 
 {% block content %}
-  <div class="sm:container lg:px-20 mx-auto ">
-    <div class="flex justify-between border-b-2 pb-2 my-4">
-      <h1 class="text-4xl font-bold">Blog Posts</h1>
-      <a href="/blog/add" class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-900">
-        Add Post
-      </a>
-    </div>
-    <div class="space-y-4 overflow-y-auto h-[500px]">
-      {% for post in posts %}
-        <div class="bg-white rounded-lg shadow-md overflow-hidden ">
-          <div class="md:flex">
-            <div class="w-full grid grid-rows-2 grid-cols-2 p-4">
-              <h2 class="row-span-1 col-span-1 text-lg font-semibold text-gray-700 capitalize md:text-xl"><a
-                href="{{ url_for('blog.post', post_id=post.id) }}">{{ post.title }}</a></h2>
-              <p class="row-start-2 col-span-1 mt-2 text-gray-600">{{ post.content[:40] }}...</p>
-              {% if post.preview_image_url %}
-                <div class="row-span-2 col-start-2 md:shrink-0">
-                  <img class="h-48 w-full object-cover md:h-full md:w-48" src="{{ post.preview_image_url }}"
-                       alt="Preview image">
-                </div>
-              {% endif %}
-            </div>
-          </div>
-          <div class="px-4 py-2 bg-gray-100 border-t border-gray-200">
-            <div class="flex items-center justify-between">
-              <span class="text-sm font-light text-gray-600">Author: {{ post.author.username }}</span>
-              <span class="text-sm font-light text-gray-600">{{ post.timestamp.strftime('%Y-%m-%d') }}</span>
-            </div>
-          </div>
+    <div class="sm:container lg:px-20 mx-auto ">
+        <div class="flex justify-between border-b-2 pb-2 my-4">
+            <h1 class="text-4xl font-bold">Blog Posts</h1>
+            <a href="/blog/add" class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-900">
+                Add Post
+            </a>
         </div>
-      {% endfor %}
+        <div class="space-y-4 overflow-y-auto h-[500px]">
+            {% for post in posts %}
+                <div class="bg-white rounded-lg shadow-md overflow-hidden ">
+                    <div class="md:flex">
+                        <div class="w-full grid grid-rows-2 grid-cols-2 p-4">
+                            <h2 class="row-span-1 col-span-1 text-lg font-semibold text-gray-700 capitalize md:text-xl">
+                                <a href="{{ url_for('blog.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+                            <p class="row-start-2 col-span-1 mt-2 text-gray-600">{{ post.content[:40] }}...</p>
+                            {% if post.preview_image_url %}
+                                <div class="row-span-2 col-start-2 md:shrink-0">
+                                    <img class="h-48 w-full object-cover md:h-full md:w-48"
+                                         src="{{ post.preview_image_url }}"
+                                         alt="Preview image">
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="px-4 py-2 bg-gray-100 border-t border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-light text-gray-600">Author: {{ post.author.username }}</span>
+                            <span class="text-sm font-light text-gray-600">{{ post.timestamp.strftime('%Y-%m-%d') }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="px-6 py-2 text-center">Posts not found</div>
+            {% endfor %}
+        </div>
     </div>
-  </div>
-  </div>
 {% endblock %}

@@ -10,5 +10,5 @@ users = Blueprint('users', __name__)
 @admin_required
 def users_list():
     page = request.args.get('page', 1, type=int)
-    users = User.query.paginate(page=page, per_page=10, error_out=False)
-    return render_template('users.html', users=users.items, pagination=users)
+    all_users = User.query.paginate(page=page, per_page=10, error_out=False)
+    return render_template('users.html', users=all_users.items, pagination=all_users)
