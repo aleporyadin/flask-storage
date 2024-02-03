@@ -1,0 +1,44 @@
+{% extends '_base.html' %}
+
+{% block title %}Add a New Post{% endblock %}
+
+{% block content %}
+  <div class="flex items-center justify-center h-full bg-gray-100">
+    <div class="px-8 py-6 mt-4 min-w-[60%] h-[80%] text-left bg-white shadow-lg overflow-auto">
+      <h3 class="text-2xl font-bold text-center">Add a New Post</h3>
+      <form method="post" class="mt-4">
+        {{ form.hidden_tag() }}
+        <div>
+          {{ form.title.label(class="block font-bold") }}
+          {{ form.title(class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600", placeholder="Title") }}
+          {% if form.title.errors %}
+            {% for error in form.title.errors %}
+              <div class="text-sm text-red-600">{{ error }}</div>
+            {% endfor %}
+          {% endif %}
+        </div>
+        <div class="mt-4">
+          {{ form.content.label(class="block font-bold") }}
+          {{ form.content(class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600", placeholder="Content") }}
+          {% if form.content.errors %}
+            {% for error in form.content.errors %}
+              <div class="text-sm text-red-600">{{ error }}</div>
+            {% endfor %}
+          {% endif %}
+        </div>
+        <div class="mt-4">
+          {{ form.preview_image_url.label(class="block font-bold") }}
+          {{ form.preview_image_url(class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600", placeholder="Preview Image URL") }}
+          {% if form.preview_image_url.errors %}
+            {% for error in form.preview_image_url.errors %}
+              <div class="text-sm text-red-600">{{ error }}</div>
+            {% endfor %}
+          {% endif %}
+        </div>
+        <div class="flex justify-between mt-6">
+          {{ form.submit(class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700") }}
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

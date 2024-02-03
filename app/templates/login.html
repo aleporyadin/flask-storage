@@ -1,0 +1,44 @@
+{% extends '_base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <div class="h-full bg-gray-100">
+    <div class="h-4/5 sm:container lg:px-20 mx-auto flex items-center justify-center ">
+      <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
+        <h3 class="text-2xl font-bold text-center">Login to your account</h3>
+        <form method="post">
+          {{ form.hidden_tag() }}
+          <div class="mt-4">
+            <div>
+              {{ form.username.label(class="block", for="username") }}
+              {{ form.username(class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600", placeholder="Username") }}
+              {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                  <div class="text-sm text-red-600">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+            <div class="mt-4">
+              {{ form.password.label(class="block") }}
+              {{ form.password(placeholder="Password", class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600") }}
+              {% if form.password.errors %}
+                {% for error in form.password.errors %}
+                  <div class="text-sm text-red-600">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+            <div class="my-4">
+              {{ form.remember_me(class="form-check-input") }}
+              {{ form.remember_me.label(class="form-check-label") }}
+            </div>
+            <div class="flex  justify-between">
+              {{ form.submit(class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-900 w-full") }}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

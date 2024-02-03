@@ -1,0 +1,110 @@
+{% extends "_base.html" %}
+{% block content %}
+  <div class="sm:container lg:px-20 mx-auto ">
+    <div class="flex justify-between border-b-2 pb-2 my-4">
+      <h1 class="text-4xl font-bold">Users</h1>
+      <button class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-900 " onclick="">Add
+        User
+      </button>
+    </div>
+
+    <div class=" max-h-[450px] overflow-y-auto shadow-md my-4">
+      <table class="w-full  text-sm text-left rtl:text-right text-gray-500 ">
+        <thead class="text-xs sticky top-0 text-gray-700 uppercase bg-gray-50">
+        <tr>
+          <th scope="col" class="px-6 py-3 text-center">
+            #
+          </th>
+          <th scope="col" class="px-6 py-3 text-center">
+            Username
+          </th>
+          <th scope="col" class="px-6 py-3 text-center">
+            Email
+          </th>
+          <th scope="col" class="px-6 py-3 text-center">
+            Quantity
+          </th>
+          <th scope="col" class="px-6 py-3 text-center">
+            role_id
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+          <tr class="bg-white border-b hover:bg-gray-50 ">
+            <td class="px-6 py-2 text-center">{{ loop.index }}</td>
+            <td class="px-6 py-2 text-center">{{ user.username }}</td>
+            <td class="px-6 py-2 text-center">{{ user.email }}</td>
+            <td class="px-6 py-2 text-center">{{ user.role.name|capitalize }}</td>
+            <td class="flex gap-4 px-6 py-2 text-center">
+              <button class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-900"
+                      onclick="">Edit
+              </button>
+              <button class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-900"
+                      onclick="">Delete
+              </button>
+            </td>
+          </tr>
+        {% else %}
+          <td colspan="5">Users not found</td>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="w-full flex items-center justify-center pb-4">
+    {% if pagination.pages > 1 %}
+      <ul class="flex items-center -space-x-px h-10 text-base">
+        {% if pagination.has_prev %}
+          <li>
+          <a href="{{ url_for('users.users', page=pagination.prev_num) }}"
+             class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
+            <span class="sr-only">Previous</span>
+            <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M5 1 1 5l4 4"></path>
+            </svg>
+          </a>
+        {% endif %}
+
+        {% for page in pagination.iter_pages() %}
+          {% if page %}
+            {% if page != pagination.page %}
+              <li><a href="{{ url_for('users.users', page=page) }}"
+                     class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">{{ page }}</a>
+              </li>
+            {% else %}
+              <li>
+                <span
+                  class="z-10 flex items-center justify-center px-4 h-10 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">{{ page }}</span>
+              </li>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+
+
+        {% if pagination.has_next %}
+          <li><a href="{{ url_for('users.users', page=pagination.next_num) }}"
+                 class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
+            <span class="sr-only">Next</span>
+            <svg class="w-3 h-3 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="m1 9 4-4-4-4"></path>
+            </svg>
+          </a></li>
+        {% endif %}
+
+      </ul>
+    {% endif %}
+  </div>
+
+
+{#  {% include 'modals/add_product_modal.html' %}#}
+{#  {% include 'modals/delete_product_modal.html' %}#}
+{#  {% include 'modals/edit_product_modal.html' %}#}
+
+
+{% endblock %}

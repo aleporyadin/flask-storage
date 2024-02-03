@@ -1,0 +1,58 @@
+{% extends '_base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+  <div class="h-full bg-gray-100">
+    <div class="h-[90%] sm:container lg:px-20 mx-auto flex items-center justify-center ">
+      <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
+        <h3 class="text-2xl font-bold text-center">Register account</h3>
+        <form method="POST">
+          {{ form.hidden_tag() }}
+          <div class="mt-4">
+            <div>
+              {{ form.username.label(class="block", for="username") }}
+              {{ form.username(class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600", placeholder="Username") }}
+              {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                  <div class="text-sm text-red-600">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+            <div class="mt-4">
+              {{ form.email.label(class="block", for="email") }}
+              {{ form.email(class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600", placeholder="Email") }}
+              {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                  <div class="text-sm text-red-600">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+            <div class="mt-4">
+              {{ form.password.label(class="block") }}
+              {{ form.password(placeholder="Password", class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600") }}
+              {% if form.password.errors %}
+                {% for error in form.password.errors %}
+                  <div class="text-sm text-red-600">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+            <div class="mt-4">
+              {{ form.password2.label(class="block") }}
+              {{ form.password2(placeholder="Confirm password", class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600") }}
+              {% if form.password2.errors %}
+                {% for error in form.password2.errors %}
+                  <div class="text-sm text-red-600">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+            <div class="flex mt-4 justify-between">
+              {{ form.submit(class="px-6 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-900 w-full") }}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
